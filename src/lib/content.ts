@@ -73,3 +73,23 @@ export function getReviewBySlug(
   const review = loadReview(slug, locale, contentDir);
   return review?.published ? review : null;
 }
+
+export type StaticPage = { title: string; body: string };
+export type StaticPageName = "about" | "for-owners";
+
+export function getPage(
+  name: StaticPageName,
+  locale: Locale,
+  contentDir = DEFAULT_CONTENT_DIR,
+): StaticPage {
+  const file = path.join(contentDir, "pages", `${name}.${locale}.md`);
+  if (!existsSync(file))
+    throw new Error(`[content] missing page file: ${name}.${locale}.md`);
+  const { data, content } = matter(readFileSync(file, "utf8"));
+  if (typeof data.title !== "string" || data.title.length === 0) {
+    throw new Error(
+      `[content] ${name}.${locale}.md: missing title in frontmatter`,
+    );
+  }
+  return { title: data.title, body: content };
+}
