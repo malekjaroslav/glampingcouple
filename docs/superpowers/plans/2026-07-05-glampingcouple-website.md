@@ -250,7 +250,10 @@ describe("getDictionary", () => {
     const en = getDictionary("en");
     expect(cs.nav.reviews).toBe("Recenze");
     expect(en.nav.reviews).toBe("Reviews");
+    expect(cs.areas.sleeping).toBe("Komfort spaní");
+    expect(en.areas.sleeping).toBe("Sleeping comfort");
     expect(Object.keys(cs).sort()).toEqual(Object.keys(en).sort());
+    expect(Object.keys(cs.areas).sort()).toEqual(Object.keys(en.areas).sort());
   });
 });
 
@@ -280,6 +283,7 @@ Expected: FAIL — cannot resolve `@/lib/i18n`.
     "heroAccent": "a všímáme si detailů.",
     "heroText": "Jsme pár, který objíždí glampingy po Česku i okolí. Píšeme poctivě, co nás nadchlo — i co není domyšlené.",
     "heroCta": "Pozvěte nás",
+    "focusTitle": "Na co se díváme",
     "latestTitle": "Nejnovější recenze",
     "allReviews": "Všechny recenze",
     "howTitle": "Jak recenzujeme",
@@ -319,6 +323,14 @@ Expected: FAIL — cannot resolve `@/lib/i18n`.
     "error": "Odeslání se nepovedlo. Napište nám prosím e-mailem.",
     "emailIntro": "Nebo nám rovnou napište:"
   },
+  "areas": {
+    "sleeping": "Komfort spaní",
+    "hygiene": "Hygiena a koupelna",
+    "cleanliness": "Čistota",
+    "privacy": "Soukromí",
+    "surroundings": "Výlety v okolí",
+    "supplies": "Zásobování (Rohlík, obchod)"
+  },
   "footer": { "tagline": "Poctivé recenze glampingů — česky i anglicky" },
   "notFound": { "title": "Stránka nenalezena", "back": "Zpět na úvod" }
 }
@@ -334,6 +346,7 @@ Expected: FAIL — cannot resolve `@/lib/i18n`.
     "heroAccent": "and notice the details.",
     "heroText": "We are a couple touring glampings across Czechia and beyond. We write honestly about what delighted us — and what isn't quite thought through.",
     "heroCta": "Invite us",
+    "focusTitle": "What we look at",
     "latestTitle": "Latest reviews",
     "allReviews": "All reviews",
     "howTitle": "How we review",
@@ -372,6 +385,14 @@ Expected: FAIL — cannot resolve `@/lib/i18n`.
     "success": "Thank you! We'll get back to you soon.",
     "error": "Sending failed. Please e-mail us directly.",
     "emailIntro": "Or write to us directly:"
+  },
+  "areas": {
+    "sleeping": "Sleeping comfort",
+    "hygiene": "Hygiene & bathroom",
+    "cleanliness": "Cleanliness",
+    "privacy": "Privacy",
+    "surroundings": "Trips around",
+    "supplies": "Supplies (delivery, shops)"
   },
   "footer": { "tagline": "Honest glamping reviews — in Czech and English" },
   "notFound": { "title": "Page not found", "back": "Back to home" }
@@ -470,6 +491,14 @@ const valid = {
   verdict: "Kouzelné místo, které by s pár úpravami bylo dokonalé.",
   liked: ["Výhled na Ještěd"],
   notThoughtThrough: ["Neosvětlená cesta na toaletu"],
+  ratings: {
+    sleeping: 9,
+    hygiene: 7,
+    cleanliness: 10,
+    privacy: 8,
+    surroundings: 8,
+    supplies: 6,
+  },
   tags: ["treehouse"],
   published: true,
 };
@@ -500,6 +529,19 @@ describe("reviewFrontmatterSchema", () => {
     expect(() => reviewFrontmatterSchema.parse({ ...valid, liked: [] })).toThrow();
   });
 
+  test("rejects missing ratings", () => {
+    const { ratings, ...rest } = valid;
+    expect(() => reviewFrontmatterSchema.parse(rest)).toThrow();
+  });
+
+  test("rejects an incomplete or out-of-range ratings object", () => {
+    const { supplies, ...incomplete } = valid.ratings;
+    expect(() => reviewFrontmatterSchema.parse({ ...valid, ratings: incomplete })).toThrow();
+    expect(() =>
+      reviewFrontmatterSchema.parse({ ...valid, ratings: { ...valid.ratings, hygiene: 11 } }),
+    ).toThrow();
+  });
+
   test("rejects missing verdict", () => {
     const { verdict, ...rest } = valid;
     expect(() => reviewFrontmatterSchema.parse(rest)).toThrow();
@@ -519,14 +561,34 @@ Expected: FAIL — cannot resolve `@/lib/schema`.
 ```ts
 import { z } from "zod";
 
+export const RATING_AREAS = [
+  "sleeping",
+  "hygiene",
+  "cleanliness",
+  "privacy",
+  "surroundings",
+  "supplies",
+] as const;
+export type RatingArea = (typeof RATING_AREAS)[number];
+
+const ratingValue = z.number().int().min(1).max(10);
+
 export const reviewFrontmatterSchema = z.object({
   title: z.string().min(1),
   location: z.string().min(1),
   stayDate: z.coerce.date(),
-  score: z.number().int().min(1).max(10),
+  score: ratingValue,
   verdict: z.string().min(1),
   liked: z.array(z.string().min(1)).min(1),
   notThoughtThrough: z.array(z.string().min(1)).min(1),
+  ratings: z.object({
+    sleeping: ratingValue,
+    hygiene: ratingValue,
+    cleanliness: ratingValue,
+    privacy: ratingValue,
+    surroundings: ratingValue,
+    supplies: ratingValue,
+  }),
   tags: z.array(z.string()).default([]),
   published: z.boolean(),
 });
@@ -631,6 +693,13 @@ liked:
   - "Snídaňový košík od místního pekaře"
 notThoughtThrough:
   - "Chybí stínění na jižní okno"
+ratings:
+  sleeping: 9
+  hygiene: 8
+  cleanliness: 10
+  privacy: 9
+  surroundings: 7
+  supplies: 8
 tags: ["maringotka"]
 published: true
 ---
@@ -652,6 +721,13 @@ liked:
   - "Breakfast basket from a local bakery"
 notThoughtThrough:
   - "No shading on the south-facing window"
+ratings:
+  sleeping: 9
+  hygiene: 8
+  cleanliness: 10
+  privacy: 9
+  surroundings: 7
+  supplies: 8
 tags: ["maringotka"]
 published: true
 ---
@@ -680,6 +756,13 @@ liked:
   - "Panoramatický výhled z postele"
 notThoughtThrough:
   - "Vrzající dveře"
+ratings:
+  sleeping: 7
+  hygiene: 6
+  cleanliness: 8
+  privacy: 9
+  surroundings: 8
+  supplies: 4
 published: true
 ---
 
@@ -699,6 +782,13 @@ liked:
   - "Zatím tajné"
 notThoughtThrough:
   - "Zatím tajné"
+ratings:
+  sleeping: 5
+  hygiene: 5
+  cleanliness: 5
+  privacy: 5
+  surroundings: 5
+  supplies: 5
 published: false
 ---
 
@@ -1287,6 +1377,13 @@ liked:
 notThoughtThrough:
   - "Jižní okno nemá stínění, v létě se maringotka přehřívá"
   - "Chybí háčky na mokré ručníky a plavky"
+ratings:
+  sleeping: 9
+  hygiene: 9
+  cleanliness: 10
+  privacy: 8
+  surroundings: 7
+  supplies: 8
 tags: ["maringotka", "rybník"]
 published: true
 ---
@@ -1316,6 +1413,13 @@ liked:
 notThoughtThrough:
   - "The south-facing window has no shading, the hut overheats in summer"
   - "No hooks for wet towels and swimwear"
+ratings:
+  sleeping: 9
+  hygiene: 9
+  cleanliness: 10
+  privacy: 8
+  surroundings: 7
+  supplies: 8
 tags: ["maringotka", "pond"]
 published: true
 ---
@@ -1344,6 +1448,13 @@ liked:
 notThoughtThrough:
   - "Cesta na toaletu v noci není osvětlená"
   - "Chybí místo na uložení batohů"
+ratings:
+  sleeping: 8
+  hygiene: 6
+  cleanliness: 9
+  privacy: 9
+  surroundings: 9
+  supplies: 5
 tags: ["treehouse", "hory"]
 published: true
 ---
@@ -1370,6 +1481,13 @@ liked:
 notThoughtThrough:
   - "The path to the toilet is not lit at night"
   - "Nowhere to store backpacks"
+ratings:
+  sleeping: 8
+  hygiene: 6
+  cleanliness: 9
+  privacy: 9
+  surroundings: 9
+  supplies: 5
 tags: ["treehouse", "mountains"]
 published: true
 ---
@@ -1432,6 +1550,9 @@ Provozujete glamping a chcete pohled zvenčí? Pozvěte nás na pobyt.
 - Fotky z pobytu, které můžete použít
 - Doporučení, co vylepšit — od maličkostí po větší nápady
 
+Každý pobyt bodujeme v šesti oblastech: komfort spaní, hygiena a koupelna,
+čistota, soukromí, výlety v okolí a zásobování (dovoz Rohlíku, obchod poblíž).
+
 Nejsme influenceři, kteří pochválí všechno. Píšeme to, co vaši hosté
 vidí, ale neřeknou vám. Právě ty nedomyšlené detaily rozhodují o tom,
 jestli se hosté vrátí.
@@ -1452,6 +1573,9 @@ Do you run a glamping and want an outside perspective? Invite us for a stay.
 - A concrete list of things your guests miss or find annoying
 - Photos from the stay that you are free to use
 - Recommendations on what to improve — from small details to bigger ideas
+
+We score every stay across six areas: sleeping comfort, hygiene & bathroom,
+cleanliness, privacy, trips around, and supplies (grocery delivery, nearby shops).
 
 We are not influencers who praise everything. We write what your guests
 notice but never tell you. It is exactly those overlooked details that
@@ -1707,7 +1831,7 @@ git commit -m "feat: reviews list pages with review cards"
 ### Task 11: Review Detail Pages
 
 **Files:**
-- Create: `src/components/ProsCons.tsx`, `src/components/VerdictBox.tsx`, `src/components/Gallery.tsx`, `src/components/pages/ReviewDetailPage.tsx`, `src/app/recenze/[slug]/page.tsx`, `src/app/en/reviews/[slug]/page.tsx`
+- Create: `src/components/ProsCons.tsx`, `src/components/VerdictBox.tsx`, `src/components/Gallery.tsx`, `src/components/Scorecard.tsx`, `src/components/pages/ReviewDetailPage.tsx`, `src/app/recenze/[slug]/page.tsx`, `src/app/en/reviews/[slug]/page.tsx`
 
 - [ ] **Step 1: Create the review building blocks**
 
@@ -1837,6 +1961,52 @@ export function Gallery({ photos, title }: { photos: string[]; title: string }) 
 }
 ```
 
+`src/components/Scorecard.tsx` (the six scored focus areas, rendered as bars — sits at the top of every review, right under the title):
+
+```tsx
+import type { Dictionary } from "@/lib/i18n";
+import { RATING_AREAS, type RatingArea, type ReviewFrontmatter } from "@/lib/schema";
+
+export const AREA_ICONS: Record<RatingArea, string> = {
+  sleeping: "🛏️",
+  hygiene: "🚿",
+  cleanliness: "✨",
+  privacy: "🔒",
+  surroundings: "🥾",
+  supplies: "🛒",
+};
+
+export function Scorecard({
+  ratings,
+  dict,
+}: {
+  ratings: ReviewFrontmatter["ratings"];
+  dict: Dictionary;
+}) {
+  return (
+    <section className="rounded-2xl border border-forest/10 bg-white/60 p-6">
+      <ul className="space-y-3">
+        {RATING_AREAS.map((area) => (
+          <li key={area} className="flex items-center gap-3 text-sm">
+            <span className="w-6 text-lg">{AREA_ICONS[area]}</span>
+            <span className="w-40 shrink-0">{dict.areas[area]}</span>
+            <span className="h-2 flex-1 overflow-hidden rounded-full bg-sand">
+              <span
+                className="block h-full rounded-full bg-terracotta"
+                style={{ width: `${ratings[area] * 10}%` }}
+              />
+            </span>
+            <span className="w-12 text-right font-display font-bold text-forest-dark">
+              {ratings[area]}/10
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+```
+
 - [ ] **Step 2: Create the shared detail page component**
 
 `src/components/pages/ReviewDetailPage.tsx`:
@@ -1848,6 +2018,7 @@ import { Footer } from "@/components/Footer";
 import { Gallery } from "@/components/Gallery";
 import { Header } from "@/components/Header";
 import { ProsCons } from "@/components/ProsCons";
+import { Scorecard } from "@/components/Scorecard";
 import { VerdictBox } from "@/components/VerdictBox";
 import { getReviewBySlug } from "@/lib/content";
 import {
@@ -1900,6 +2071,10 @@ export async function ReviewDetailPage({ locale, slug }: { locale: Locale; slug:
         <p className="mt-2 text-forest/70">
           {review.location} · {dict.review.stayDate}: {formatStayDate(review.stayDate, locale)}
         </p>
+
+        <div className="mt-8">
+          <Scorecard ratings={review.ratings} dict={dict} />
+        </div>
 
         <article
           className="prose-body mt-8"
@@ -2037,8 +2212,10 @@ import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ReviewCard } from "@/components/ReviewCard";
+import { AREA_ICONS } from "@/components/Scorecard";
 import { getReviews } from "@/lib/content";
 import { type Locale, getDictionary, otherLocale, pagePath } from "@/lib/i18n";
+import { RATING_AREAS } from "@/lib/schema";
 
 export function HomePage({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
@@ -2079,6 +2256,23 @@ export function HomePage({ locale }: { locale: Locale }) {
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {latest.map((review) => (
               <ReviewCard key={review.slug} review={review} />
+            ))}
+          </div>
+        </section>
+
+        <section className="py-8">
+          <h2 className="font-display text-2xl font-semibold text-forest-dark">
+            {dict.home.focusTitle}
+          </h2>
+          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {RATING_AREAS.map((area) => (
+              <div
+                key={area}
+                className="rounded-2xl border border-forest/10 bg-white/50 p-4 text-center"
+              >
+                <span className="text-2xl">{AREA_ICONS[area]}</span>
+                <p className="mt-2 text-sm font-semibold text-forest-dark">{dict.areas[area]}</p>
+              </div>
             ))}
           </div>
         </section>
@@ -2164,7 +2358,7 @@ export default function Page() {
 - [ ] **Step 3: Verify visually**
 
 Run: `bun run dev` and open `http://localhost:3000` and `http://localhost:3000/en`.
-Expected: hero, 2 review cards, "how we review" strip, owners CTA banner; language switcher flips between `/` and `/en`.
+Expected: hero, 2 review cards, "Na co se díváme" grid with the six focus areas, "how we review" strip, owners CTA banner; language switcher flips between `/` and `/en`.
 
 - [ ] **Step 4: Commit**
 
@@ -2565,7 +2759,9 @@ Bilingual (CZ/EN) static glamping-review website. Next.js 16 + Bun + Tailwind v4
 
 1. Create `content/reviews/<slug>/` (slug = glamping name, ASCII, kebab-case).
 2. Write `cs.md` (frontmatter: title, location, stayDate, score 1–10, verdict,
-   liked[], notThoughtThrough[], tags[], published) + story as the body.
+   liked[], notThoughtThrough[], ratings{sleeping, hygiene, cleanliness,
+   privacy, surroundings, supplies — each 1–10}, tags[], published) + story
+   as the body.
 3. Translate to `en.md` (same slug, same frontmatter shape). Missing `en.md`
    just hides the review from the English site.
 4. Drop photos into `photos/` — `cover.jpg` is the card/OG image.

@@ -43,22 +43,35 @@ Built with Next.js, fully statically generated, content in markdown files in the
 - Every page emits `hreflang` tags pairing its CZ/EN versions.
 - Header has a language switcher (same slug, different prefix).
 
-**Homepage content:** hero (tagline + photo), latest 3 reviews, "how we review"
+**Homepage content:** hero (tagline + photo), latest 3 reviews, "Na co se
+díváme" grid of the six scored focus areas (icon + label), "how we review"
 strip explaining the hybrid format, prominent "Pro majitele" CTA.
 
-**Review detail layout:** personal intro story → photo gallery → "Co nás nadchlo" ✓
-box → "Co není domyšlené" ✗ box → verdict box with score → footer CTA
-("Máte glamping? Pozvěte nás").
+**Review detail layout:** scorecard (six areas, 1–10 each) → personal intro
+story → photo gallery → "Co nás nadchlo" ✓ box → "Co není domyšlené" ✗ box →
+verdict box with overall score → footer CTA ("Máte glamping? Pozvěte nás").
 
 **Pro majitele page:** what an invited review includes, what owners get, contact
 form + visible email address.
 
-## Review Format (Hybrid)
+## Review Format (Hybrid + Scorecard)
 
-Decided format: short personal intro narrative, then structured liked /
-not-thought-through breakdown, one overall verdict (score 1–10 + one-sentence
-verdict) instead of per-category scores. Consistency of the structured part is a
-selling point toward owners.
+Each review combines, in this order:
+
+1. **Scorecard first** — six fixed focus areas, each scored 1–10, rendered
+   right under the title (before the story): komfort spaní (sleeping),
+   hygiena a koupelna (hygiene), čistota (cleanliness), soukromí (privacy),
+   výlety v okolí (surroundings), zásobování — dovoz Rohlíku, obchod poblíž
+   (supplies).
+2. **Personal intro narrative** — the couple's story of the stay.
+3. **Structured liked / not-thought-through breakdown.**
+4. **One overall verdict** — score 1–10 (the couple's gut call, not a computed
+   average) + one-sentence verdict.
+
+The homepage additionally presents the six areas in a "Na co se díváme"
+section (icon + label). Consistency of the structured parts is a selling point
+toward owners. Explicitly not scored: breakfast/food (often not offered —
+covered by supplies) and kids/dog friendliness (a fact, expressed via tags).
 
 ## Content Model
 
@@ -81,6 +94,13 @@ location: string       # e.g. "Liberecký kraj"
 stayDate: date
 score: number          # 1–10 overall
 verdict: string        # one-sentence summary
+ratings:               # six fixed areas, each 1–10
+  sleeping: number     # komfort spaní
+  hygiene: number      # hygiena a koupelna
+  cleanliness: number  # čistota
+  privacy: number      # soukromí
+  surroundings: number # výlety v okolí
+  supplies: number     # zásobování (Rohlík, obchod poblíž)
 liked: string[]        # "Co nás nadchlo" items
 notThoughtThrough: string[]  # "Co není domyšlené" items
 tags: string[]
