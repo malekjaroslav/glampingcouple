@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { getDictionary } from "@/lib/i18n";
 
-export default function NotFound() {
+export function NotFoundContent() {
   const cs = getDictionary("cs");
   const en = getDictionary("en");
   return (
@@ -11,19 +10,19 @@ export default function NotFound() {
         {cs.notFound.title} · <span lang="en">{en.notFound.title}</span>
       </h1>
       <div className="mt-6 flex gap-4">
-        <Link
+        <a
           href="/"
           className="rounded-full bg-forest px-6 py-2 text-cream hover:bg-forest-dark"
         >
           {cs.notFound.back}
-        </Link>
-        <Link
+        </a>
+        <a
           href="/en"
           lang="en"
           className="rounded-full border border-forest px-6 py-2 text-forest hover:bg-sand"
         >
           {en.notFound.back}
-        </Link>
+        </a>
       </div>
     </main>
   );

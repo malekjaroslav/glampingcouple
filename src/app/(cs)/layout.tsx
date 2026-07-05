@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Lora } from "next/font/google";
+import { lora } from "@/lib/fonts";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
-import "./globals.css";
-
-const lora = Lora({ subsets: ["latin", "latin-ext"], variable: "--font-lora" });
+import "../globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -15,7 +13,7 @@ export const metadata: Metadata = {
     "Jsme pár, který objíždí glampingy. Píšeme poctivě, co nás nadchlo — i co není domyšlené.",
 };
 
-export default function RootLayout({
+export default function CsRootLayout({
   children,
 }: {
   children: React.ReactNode;
