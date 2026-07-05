@@ -3,9 +3,11 @@ import Image from "next/image";
 export function Gallery({
   photos,
   title,
+  photoLabel,
 }: {
   photos: string[];
   title: string;
+  photoLabel: string;
 }) {
   if (photos.length === 0) return null;
   return (
@@ -17,7 +19,7 @@ export function Gallery({
         >
           <Image
             src={src}
-            alt={`${title} — foto ${i + 1}`}
+            alt={`${title} — ${photoLabel} ${i + 1}`}
             fill
             sizes="(max-width: 640px) 50vw, 33vw"
             className="object-cover"

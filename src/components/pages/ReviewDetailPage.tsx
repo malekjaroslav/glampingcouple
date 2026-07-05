@@ -88,7 +88,11 @@ export async function ReviewDetailPage({
         />
 
         <div className="mt-10">
-          <Gallery photos={review.photos} title={review.title} />
+          <Gallery
+            photos={review.photos}
+            title={review.title}
+            photoLabel={dict.review.photo}
+          />
         </div>
 
         <div className="mt-10">
