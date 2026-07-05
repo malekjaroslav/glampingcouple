@@ -7,8 +7,10 @@ export const DEFAULT_LOCALE: Locale = "cs";
 
 export type Dictionary = typeof cs;
 
+const enDict: Dictionary = en;
+
 export function getDictionary(locale: Locale): Dictionary {
-  return locale === "cs" ? cs : (en as Dictionary);
+  return locale === "cs" ? cs : enDict;
 }
 
 export function otherLocale(locale: Locale): Locale {

@@ -48,6 +48,14 @@ describe("reviewPath", () => {
   });
 });
 
+function deepKeys(obj: object, prefix = ""): string[] {
+  return Object.entries(obj).flatMap(([k, v]) =>
+    typeof v === "object" && v !== null
+      ? deepKeys(v, `${prefix}${k}.`)
+      : `${prefix}${k}`,
+  );
+}
+
 describe("getDictionary", () => {
   test("returns matching translations with identical shape", () => {
     const cs = getDictionary("cs");
@@ -56,8 +64,7 @@ describe("getDictionary", () => {
     expect(en.nav.reviews).toBe("Reviews");
     expect(cs.areas.sleeping).toBe("Komfort spaní");
     expect(en.areas.sleeping).toBe("Sleeping comfort");
-    expect(Object.keys(cs).sort()).toEqual(Object.keys(en).sort());
-    expect(Object.keys(cs.areas).sort()).toEqual(Object.keys(en.areas).sort());
+    expect(deepKeys(en).sort()).toEqual(deepKeys(cs).sort());
   });
 });
 
