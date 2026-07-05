@@ -2,6 +2,7 @@ node_modules/
 .next/
 .superpowers/
 .env*
+!.env.example
 next-env.d.ts
 out/
 .vercel
