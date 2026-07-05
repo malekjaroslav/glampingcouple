@@ -107,6 +107,10 @@ elements carry atmosphere where photos can't (mixed photo quality).
 
 - **Next.js** (App Router, TypeScript), fully static generation. Verify latest
   stable versions online at implementation-plan time.
+- **Bun** as package manager, runtime (`bun --bun next dev`), and test runner
+  (`bun test`).
+- **Biome** for linting + formatting (replaces ESLint + Prettier), with the
+  `react` and `next` rule domains enabled.
 - **Tailwind CSS**, custom earthy palette.
 - **Content:** `gray-matter` + `remark` for markdown; `next/image` for photos.
 - **i18n:** lightweight custom setup (2 locales, no i18n library). Czech at root,
@@ -131,8 +135,8 @@ elements carry atmosphere where photos can't (mixed photo quality).
 
 ## Testing
 
-- **Vitest** unit tests for the content layer: frontmatter parsing + validation,
-  slug generation, locale filtering/fallback.
+- **`bun test`** unit tests for the content layer: frontmatter parsing +
+  validation, slug generation, locale filtering/fallback.
 - A test asserting every content file on disk builds into a page.
 - Visual appearance verified by eye in preview (design-driven site).
 
