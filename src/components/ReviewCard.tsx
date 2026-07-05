@@ -33,7 +33,7 @@ export function ReviewCard({ review }: { review: Review }) {
           </h3>
           <p className="mt-1 text-sm text-forest/70">{review.location}</p>
           <p className="mt-3 text-sm italic text-forest/80">
-            „{review.verdict}"
+            „{review.verdict}“
           </p>
           <p className="mt-3 text-sm font-semibold text-terracotta">
             {dict.reviews.readMore} →
