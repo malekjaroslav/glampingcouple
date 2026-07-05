@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+@theme {
+  --color-cream: #faf6ef;
+  --color-sand: #f1e8d8;
+  --color-forest: #3d4a3a;
+  --color-forest-dark: #2e3a2b;
+  --color-moss: #8a9a5b;
+  --color-terracotta: #b06b43;
+  --color-terracotta-dark: #96552f;
+  --font-display: var(--font-lora), Georgia, serif;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-forest);
+}
+
+/* Rendered markdown (review stories, static pages) */
+.prose-body h1,
+.prose-body h2,
+.prose-body h3 {
+  font-family: var(--font-display);
+  color: var(--color-forest-dark);
+  margin: 1.5em 0 0.5em;
+}
+.prose-body p {
+  margin: 0.75em 0;
+  line-height: 1.7;
+}
+.prose-body a {
+  color: var(--color-terracotta);
+  text-decoration: underline;
+}
+.prose-body ul {
+  list-style: disc;
+  padding-left: 1.5em;
+  margin: 0.75em 0;
+}
