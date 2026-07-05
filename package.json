@@ -2,6 +2,7 @@
   "name": "glampingcouple",
   "private": true,
   "type": "module",
+  "packageManager": "bun@1.3.12",
   "scripts": {
     "sync-photos": "bun scripts/sync-photos.ts",
     "dev": "bun run sync-photos && bun --bun next dev",
