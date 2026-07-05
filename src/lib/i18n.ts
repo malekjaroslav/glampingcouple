@@ -26,6 +26,8 @@ const ROUTES: Record<PageKey, Record<Locale, string>> = {
   forOwners: { cs: "/pro-majitele", en: "/en/for-owners" },
 };
 
+export const PAGE_KEYS = Object.keys(ROUTES) as PageKey[];
+
 export function pagePath(page: PageKey, locale: Locale): string {
   return ROUTES[page][locale];
 }
