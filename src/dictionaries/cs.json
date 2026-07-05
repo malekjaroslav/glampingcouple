@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "reviews": "Recenze",
+    "about": "O nás",
+    "forOwners": "Pro majitele"
+  },
+  "home": {
+    "heroTitle": "Spíme pod hvězdami",
+    "heroAccent": "a všímáme si detailů.",
+    "heroText": "Jsme pár, který objíždí glampingy po Česku i okolí. Píšeme poctivě, co nás nadchlo — i co není domyšlené.",
+    "heroCta": "Pozvěte nás",
+    "focusTitle": "Na co se díváme",
+    "latestTitle": "Nejnovější recenze",
+    "allReviews": "Všechny recenze",
+    "howTitle": "Jak recenzujeme",
+    "howStep1Title": "Příběh pobytu",
+    "howStep1Text": "Každou recenzi otevírá osobní vyprávění — jak se u vás doopravdy spí, snídá a odpočívá.",
+    "howStep2Title": "Nadchlo × není domyšlené",
+    "howStep2Text": "Poctivý seznam toho, co milujeme, a detailů, které by šly vylepšit.",
+    "howStep3Title": "Verdikt",
+    "howStep3Text": "Jedno celkové hodnocení 1–10 a shrnutí jednou větou.",
+    "ownersTitle": "Máte glamping?",
+    "ownersText": "Pozvěte nás na pobyt. Napíšeme poctivou recenzi a dáme vám konkrétní tipy, co vylepšit.",
+    "ownersCta": "Zjistit víc"
+  },
+  "reviews": {
+    "title": "Recenze glampingů",
+    "empty": "Zatím tu nic není — první recenze jsou na cestě.",
+    "readMore": "Číst recenzi"
+  },
+  "review": {
+    "liked": "Co nás nadchlo",
+    "notThoughtThrough": "Co není domyšlené",
+    "verdict": "Náš verdikt",
+    "stayDate": "Termín pobytu",
+    "backToReviews": "Zpět na recenze",
+    "photo": "foto",
+    "ctaTitle": "Máte glamping? Pozvěte nás.",
+    "ctaButton": "Pro majitele"
+  },
+  "contact": {
+    "name": "Vaše jméno",
+    "email": "E-mail",
+    "glamping": "Název glampingu",
+    "website": "Web glampingu (nepovinné)",
+    "message": "Zpráva",
+    "send": "Odeslat",
+    "sending": "Odesílám…",
+    "success": "Děkujeme! Ozveme se co nejdřív.",
+    "error": "Odeslání se nepovedlo. Napište nám prosím e-mailem.",
+    "emailIntro": "Nebo nám rovnou napište:"
+  },
+  "areas": {
+    "sleeping": "Komfort spaní",
+    "hygiene": "Hygiena a koupelna",
+    "cleanliness": "Čistota",
+    "privacy": "Soukromí",
+    "surroundings": "Výlety v okolí",
+    "supplies": "Zásobování (Rohlík, obchod)"
+  },
+  "footer": { "tagline": "Poctivé recenze glampingů — česky i anglicky" },
+  "notFound": { "title": "Stránka nenalezena", "back": "Zpět na úvod" }
+}
