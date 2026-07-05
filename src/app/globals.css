@@ -9,11 +9,137 @@
   --color-terracotta: #b06b43;
   --color-terracotta-dark: #96552f;
   --font-display: var(--font-lora), Georgia, serif;
+  --font-body: var(--font-karla), "Gill Sans", "Segoe UI", sans-serif;
 }
 
 body {
-  background-color: var(--color-cream);
+  font-family: var(--font-body);
   color: var(--color-forest);
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(
+      ellipse 90% 55% at 12% -12%,
+      rgb(138 154 91 / 0.16),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 70% 45% at 95% -5%,
+      rgb(176 107 67 / 0.12),
+      transparent 55%
+    );
+  background-repeat: no-repeat;
+}
+
+/* Paper grain over everything — the "field journal" texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-terracotta);
+  color: var(--color-cream);
+}
+
+/* Small uppercase section label */
+.kicker {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.6em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+.kicker::before {
+  content: "";
+  width: 1.75rem;
+  height: 1.5px;
+  background: var(--color-terracotta);
+}
+
+/* Animated underline for nav links */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1.5px;
+  width: 100%;
+  background: var(--color-terracotta);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Page-load reveal */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.reveal-1 {
+  animation-delay: 0.1s;
+}
+.reveal-2 {
+  animation-delay: 0.2s;
+}
+.reveal-3 {
+  animation-delay: 0.3s;
+}
+.reveal-4 {
+  animation-delay: 0.42s;
+}
+
+/* Scorecard bars grow in */
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+.score-bar {
+  transform-origin: left;
+  animation: bar-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Slowly rotating hero stamp */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.stamp-spin {
+  animation: spin-slow 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .score-bar,
+  .stamp-spin {
+    animation: none;
+  }
 }
 
 /* Rendered markdown (review stories, static pages) */
@@ -25,8 +151,9 @@ body {
   margin: 1.5em 0 0.5em;
 }
 .prose-body p {
-  margin: 0.75em 0;
-  line-height: 1.7;
+  margin: 0.85em 0;
+  line-height: 1.75;
+  font-size: 1.0625rem;
 }
 .prose-body a {
   color: var(--color-terracotta);
@@ -35,5 +162,16 @@ body {
 .prose-body ul {
   list-style: disc;
   padding-left: 1.5em;
-  margin: 0.75em 0;
+  margin: 0.85em 0;
+}
+
+/* Journal drop cap on the opening paragraph of a story */
+.prose-story > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 3.4em;
+  line-height: 0.85;
+  padding-right: 0.14em;
+  color: var(--color-terracotta);
 }

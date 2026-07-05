@@ -10,36 +10,41 @@ export function Header({
 }) {
   const dict = getDictionary(locale);
   return (
-    <header className="border-b border-forest/10 bg-cream/90">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
+    <header className="sticky top-0 z-40 border-forest/10 border-b bg-cream/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3.5">
         <Link
           href={pagePath("home", locale)}
-          className="font-display text-xl font-semibold tracking-wide"
+          className="group flex items-baseline gap-1 font-display text-xl tracking-wide"
         >
-          glamping<span className="text-terracotta">couple</span>
-        </Link>
-        <nav className="flex items-center gap-5 text-sm">
-          <Link
-            href={pagePath("reviews", locale)}
-            className="hover:text-terracotta"
+          <svg
+            viewBox="0 0 24 20"
+            className="h-4 w-5 self-center text-forest transition-colors group-hover:text-terracotta"
+            aria-hidden="true"
           >
+            <path
+              d="M12 2 L22 18 L14.5 18 L12 13.5 L9.5 18 L2 18 Z"
+              fill="currentColor"
+            />
+          </svg>
+          <span className="font-semibold text-forest-dark">glamping</span>
+          <span className="font-semibold text-terracotta italic">couple</span>
+        </Link>
+        <nav className="flex items-center gap-6 text-[0.9rem]">
+          <Link href={pagePath("reviews", locale)} className="nav-link">
             {dict.nav.reviews}
           </Link>
-          <Link
-            href={pagePath("about", locale)}
-            className="hover:text-terracotta"
-          >
+          <Link href={pagePath("about", locale)} className="nav-link">
             {dict.nav.about}
           </Link>
           <Link
             href={pagePath("forOwners", locale)}
-            className="rounded-full bg-forest px-4 py-1.5 text-cream hover:bg-forest-dark"
+            className="rounded-full bg-forest px-4 py-1.5 text-cream transition-all hover:-translate-y-0.5 hover:bg-forest-dark hover:shadow-forest/20 hover:shadow-md"
           >
             {dict.nav.forOwners}
           </Link>
           <Link
             href={altHref}
-            className="font-semibold uppercase tracking-wider hover:text-terracotta"
+            className="rounded-full border border-forest/25 px-2.5 py-1 font-bold text-[0.7rem] tracking-widest transition-colors hover:border-terracotta hover:text-terracotta"
           >
             {otherLocale(locale) === "en" ? "EN" : "CZ"}
           </Link>

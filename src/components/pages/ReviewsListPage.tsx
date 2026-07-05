@@ -13,8 +13,9 @@ export function ReviewsListPage({ locale }: { locale: Locale }) {
         locale={locale}
         altHref={pagePath("reviews", otherLocale(locale))}
       />
-      <main className="mx-auto max-w-5xl px-4 py-12">
-        <h1 className="font-display text-3xl font-semibold text-forest-dark sm:text-4xl">
+      <main className="mx-auto max-w-5xl px-4 py-14">
+        <p className="kicker">{dict.footer.tagline}</p>
+        <h1 className="reveal mt-3 font-display text-4xl text-forest-dark sm:text-5xl">
           {dict.reviews.title}
         </h1>
         {reviews.length === 0 ? (

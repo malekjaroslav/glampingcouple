@@ -33,17 +33,18 @@ export async function StaticContentPage({
         locale={locale}
         altHref={pagePath(pageKey, otherLocale(locale))}
       />
-      <main className="mx-auto max-w-3xl px-4 py-12">
-        <h1 className="font-display text-3xl font-semibold text-forest-dark sm:text-4xl">
+      <main className="mx-auto max-w-3xl px-4 py-14">
+        <p className="kicker">glampingcouple</p>
+        <h1 className="reveal mt-3 font-display text-4xl text-forest-dark sm:text-5xl">
           {page.title}
         </h1>
         <article
-          className="prose-body mt-6"
+          className="prose-body mt-8"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: html produced by our own remark pipeline from repo content
           dangerouslySetInnerHTML={{ __html: bodyHtml }}
         />
         {withContactForm && (
-          <section className="mt-12 rounded-2xl border border-forest/15 bg-sand/50 p-6 sm:p-8">
+          <section className="mt-12 rounded-[1.6rem] border-2 border-terracotta/40 border-dashed bg-sand/50 p-6 sm:p-9">
             <ContactForm dict={dict} email={CONTACT_EMAIL} />
           </section>
         )}

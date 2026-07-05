@@ -65,24 +65,23 @@ export async function ReviewDetailPage({
         />
         <Link
           href={pagePath("reviews", locale)}
-          className="text-sm text-terracotta underline"
+          className="nav-link font-bold text-terracotta text-xs uppercase tracking-widest"
         >
           ← {dict.review.backToReviews}
         </Link>
-        <h1 className="mt-4 font-display text-3xl font-semibold text-forest-dark sm:text-4xl">
+        <p className="kicker mt-8">
+          {review.location} · {formatStayDate(review.stayDate, locale)}
+        </p>
+        <h1 className="reveal mt-3 font-display text-4xl text-forest-dark leading-[1.08] sm:text-5xl">
           {review.title}
         </h1>
-        <p className="mt-2 text-forest/70">
-          {review.location} · {dict.review.stayDate}:{" "}
-          {formatStayDate(review.stayDate, locale)}
-        </p>
 
         <div className="mt-8">
           <Scorecard ratings={review.ratings} dict={dict} />
         </div>
 
         <article
-          className="prose-body mt-8"
+          className="prose-body prose-story mt-10"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: html produced by our own remark pipeline from repo content
           dangerouslySetInnerHTML={{ __html: bodyHtml }}
         />
@@ -111,15 +110,15 @@ export async function ReviewDetailPage({
           />
         </div>
 
-        <section className="mt-14 rounded-2xl border border-forest/15 bg-sand/60 p-8 text-center">
-          <h2 className="font-display text-xl font-semibold text-forest-dark">
+        <section className="mt-16 rounded-[1.6rem] border-2 border-terracotta/40 border-dashed bg-sand/50 p-8 text-center sm:p-10">
+          <h2 className="font-display text-2xl text-forest-dark">
             {dict.review.ctaTitle}
           </h2>
           <Link
             href={pagePath("forOwners", locale)}
-            className="mt-4 inline-block rounded-full bg-terracotta px-6 py-2 font-semibold text-cream hover:bg-terracotta-dark"
+            className="mt-5 inline-block rounded-full bg-terracotta px-7 py-2.5 font-bold text-cream transition-all hover:-translate-y-0.5 hover:bg-terracotta-dark hover:shadow-lg hover:shadow-terracotta/25"
           >
-            {dict.review.ctaButton}
+            {dict.review.ctaButton} →
           </Link>
         </section>
       </main>

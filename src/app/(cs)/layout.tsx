@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { lora } from "@/lib/fonts";
+import { karla, lora } from "@/lib/fonts";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "../globals.css";
 
@@ -19,7 +19,7 @@ export default function CsRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="cs" className={lora.variable}>
+    <html lang="cs" className={`${lora.variable} ${karla.variable}`}>
       <body>{children}</body>
     </html>
   );
