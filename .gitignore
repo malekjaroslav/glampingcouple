@@ -2,3 +2,8 @@ node_modules/
 .next/
 .superpowers/
 .env*
+next-env.d.ts
+out/
+.vercel
+*.tsbuildinfo
+public/reviews/
