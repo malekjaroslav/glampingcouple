@@ -49,6 +49,7 @@ export function ContactForm({
           <input
             name="name"
             required
+            aria-label={dict.contact.name}
             placeholder={dict.contact.name}
             className={inputClasses}
           />
@@ -56,17 +57,20 @@ export function ContactForm({
             name="email"
             type="email"
             required
+            aria-label={dict.contact.email}
             placeholder={dict.contact.email}
             className={inputClasses}
           />
           <input
             name="glamping"
             required
+            aria-label={dict.contact.glamping}
             placeholder={dict.contact.glamping}
             className={inputClasses}
           />
           <input
             name="website"
+            aria-label={dict.contact.website}
             placeholder={dict.contact.website}
             className={inputClasses}
           />
@@ -74,6 +78,7 @@ export function ContactForm({
             name="message"
             required
             rows={5}
+            aria-label={dict.contact.message}
             placeholder={dict.contact.message}
             className={inputClasses}
           />
