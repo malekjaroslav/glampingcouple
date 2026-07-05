@@ -2,13 +2,13 @@ import { HomePage } from "@/components/pages/HomePage";
 import { pagePath } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 
-const TITLE = "glampingcouple — poctivé recenze glampingů";
+const TITLE = "glampingcouple — honest glamping reviews";
 
 const base = pageMetadata({
-  locale: "cs",
+  locale: "en",
   title: TITLE,
   description:
-    "Jsme pár, který objíždí glampingy. Píšeme poctivě, co nás nadchlo — i co není domyšlené.",
+    "We are a couple touring glampings. We write honestly about what delighted us — and what isn't thought through.",
   csPath: pagePath("home", "cs"),
   enPath: pagePath("home", "en"),
 });
@@ -16,5 +16,5 @@ const base = pageMetadata({
 export const metadata = { ...base, title: { absolute: TITLE } };
 
 export default function Page() {
-  return <HomePage locale="cs" />;
+  return <HomePage locale="en" />;
 }
