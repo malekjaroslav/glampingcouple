@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "reviews": "Reviews",
+    "about": "About us",
+    "forOwners": "For owners"
+  },
+  "home": {
+    "heroTitle": "We sleep under the stars",
+    "heroAccent": "and notice the details.",
+    "heroText": "We are a couple touring glampings across Czechia and beyond. We write honestly about what delighted us — and what isn't quite thought through.",
+    "heroCta": "Invite us",
+    "focusTitle": "What we look at",
+    "latestTitle": "Latest reviews",
+    "allReviews": "All reviews",
+    "howTitle": "How we review",
+    "howStep1Title": "The story of the stay",
+    "howStep1Text": "Every review opens with a personal story — how sleeping, breakfasting and unwinding at your place really feels.",
+    "howStep2Title": "Loved × not thought through",
+    "howStep2Text": "An honest list of what we love and the details that could be improved.",
+    "howStep3Title": "The verdict",
+    "howStep3Text": "One overall score from 1–10 and a one-sentence summary.",
+    "ownersTitle": "Do you run a glamping?",
+    "ownersText": "Invite us for a stay. We'll write an honest review and give you concrete tips on what to improve.",
+    "ownersCta": "Learn more"
+  },
+  "reviews": {
+    "title": "Glamping reviews",
+    "empty": "Nothing here yet — the first reviews are on their way.",
+    "readMore": "Read the review"
+  },
+  "review": {
+    "liked": "What delighted us",
+    "notThoughtThrough": "What isn't thought through",
+    "verdict": "Our verdict",
+    "stayDate": "Stay date",
+    "backToReviews": "Back to reviews",
+    "ctaTitle": "Do you run a glamping? Invite us.",
+    "ctaButton": "For owners"
+  },
+  "contact": {
+    "name": "Your name",
+    "email": "E-mail",
+    "glamping": "Glamping name",
+    "website": "Glamping website (optional)",
+    "message": "Message",
+    "send": "Send",
+    "sending": "Sending…",
+    "success": "Thank you! We'll get back to you soon.",
+    "error": "Sending failed. Please e-mail us directly.",
+    "emailIntro": "Or write to us directly:"
+  },
+  "areas": {
+    "sleeping": "Sleeping comfort",
+    "hygiene": "Hygiene & bathroom",
+    "cleanliness": "Cleanliness",
+    "privacy": "Privacy",
+    "surroundings": "Trips around",
+    "supplies": "Supplies (delivery, shops)"
+  },
+  "footer": { "tagline": "Honest glamping reviews — in Czech and English" },
+  "notFound": { "title": "Page not found", "back": "Back to home" }
+}
